@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .profile-info strong {
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Welcome, <span id="username">User</span>!</h1>
+        <p class="profile-info"><strong>Email:</strong> <span id="email">N/A</span></p>
+        <p class="profile-info"><strong>Date of Birth:</strong> <span id="dob">N/A</span></p>
+        <p class="profile-info"><strong>Gender:</strong> <span id="gender">N/A</span></p>
+        <p class="profile-info"><strong>Location:</strong> <span id="location">N/A</span></p>
+        <p class="profile-info"><strong>Phone:</strong> <span id="phone">N/A</span></p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Retrieve user data from localStorage
+        window.onload = function() {
+            const username = localStorage.getItem("username") || "User";
+            const email = localStorage.getItem("email") || "Not Available";
+            const dob = localStorage.getItem("dob") || "Not Available";
+            const gender = localStorage.getItem("gender") || "Not Available";
+            const location = localStorage.getItem("location") || "Not Available";
+            const phone = localStorage.getItem("phone") || "Not Available";
+
+            // Display data on the profile page
+            document.getElementById("username").textContent = username;
+            document.getElementById("email").textContent = email;
+            document.getElementById("dob").textContent = dob;
+            document.getElementById("gender").textContent = gender;
+            document.getElementById("location").textContent = location;
+            document.getElementById("phone").textContent = phone;
+        };
+
+        // Logout function
+        function logout() {
+            localStorage.clear(); // Clears all stored data
+            alert("Logged out successfully!");
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Empowering Farmers</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #e8f8f5, #d1f2eb);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #16a085, #2980b9);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            animation: fadeIn 2s ease;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            animation: fadeIn 2.5s ease;
+        }
+
+        /* Section Styles */
+        section {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            animation: slideIn 1.5s ease;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            color: #16a085;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            margin: 20px auto;
+            display: block;
+        }
+
+        /* Callout Section */
+        .callout {
+            background: linear-gradient(180deg, #d4efdf, #a9dfbf);
+            margin: 30px auto;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 2s ease;
+        }
+
+        .callout h3 {
+            font-size: 2rem;
+            color: #1abc9c;
+            margin-bottom: 10px;
+        }
+
+        .callout p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #16a085;
+            color: white;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #0e6655;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: linear-gradient(90deg, #16a085, #2980b9);
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+            border-top-left-radius: 50% 20px;
+            border-top-right-radius: 50% 20px;
+        }
+
+        footer a {
+            color: #1abc9c;
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Empowering Farmers with AI</h1>
+        <p>Transforming Agriculture with Technology and Innovation</p>
+    </header>
+
+    <section>
+        <h2>Key Statistics: Pie Chart</h2>
+        <p>The chart below highlights the areas where AI has positively impacted farming practices.</p>
+        <canvas id="pieChart" width="400" height="400"></canvas>
+    </section>
+
+    <section>
+        <h2>Cost Reduction: Bar Graph</h2>
+        <p>Explore how AI helps reduce costs across various farming processes:</p>
+        <canvas id="barChart" width="600" height="400"></canvas>
+    </section>
+
+   
+        <div class="callout">
+            <h3>Want to Learn More?</h3>
+            <p>Discover how AI can revolutionize agriculture and improve your farming practices.</p>
+            <a href="login.html" class="cta-button">Get Started</a>
+        </div>
+
+    <footer>
+        &copy; 2025 AI Empowering Farmers | Innovating Agriculture for a Better Tomorrow | <a href="#">Back to Top</a>
+    </footer>
+
+    <script>
+        // Pie Chart Data
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Precision Farming', 'Pest Detection', 'Yield Improvement', 'Market Access'],
+                datasets: [{
+                    label: 'AI Impact',
+                    data: [35, 30, 25, 50],
+                    backgroundColor: ['#16a085', '#2980b9', '#f39c12', '#e74c3c'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Bar Chart Data
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Irrigation', 'Fertilization', 'Pest Control', 'Market Logistics'],
+                datasets: [{
+                    label: 'Cost Reduction (%)',
+                    data: [20, 25, 30, 40],
+                    backgroundColor: '#2980b9',
+                    borderColor: '#16a085',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Cost Reduction (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Farming Processes'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resource Management</title>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        form select, form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 20px;
+            font-size: 1.2em;
+            color: #4CAF50;
+        }
+
+        #recommendations-output {
+            display: none;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Resource Management</h1>
+        <p>AI-Powered Recommendations for Agriculture</p>
+    </header>
+    <main>
+        <section>
+            <h2>Get Your Recommendations</h2>
+            <form id="recommendation-form">
+                <label for="season">Season</label>
+                <select id="season">
+                    <option value="">-- Select Season --</option>
+                    <option value="summer">Summer</option>
+                    <option value="monsoon">Monsoon</option>
+                    <option value="winter">Winter</option>
+                </select>
+
+                <label for="crop">Crop</label>
+                <select id="crop">
+                    <option value="">-- Select Crop --</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="rice">Rice</option>
+                    <option value="maize">Maize</option>
+                </select>
+
+                <label for="soil">Soil Type</label>
+                <select id="soil">
+                    <option value="">-- Select Soil Type --</option>
+                    <option value="loamy">Loamy</option>
+                    <option value="clayey">Clayey</option>
+                    <option value="sandy">Sandy</option>
+                </select>
+
+                <label for="region">Region</label>
+                <select id="region">
+                    <option value="">-- Select Region --</option>
+                    <option value="north">North</option>
+                    <option value="south">South</option>
+                    <option value="east">East</option>
+                    <option value="west">West</option>
+                </select>
+
+                <button type="button" id="generate-button">Generate AI Recommendations</button>
+            </form>
+        </section>
+
+        <div id="loading">🤖 Generating AI recommendations... Please wait.</div>
+
+        <div id="recommendations-output">
+            <h2>AI Recommendations:</h2>
+            <p id="seeds"></p>
+            <p id="fertilizer"></p>
+            <p id="irrigation"></p>
+        </div>
+    </main>
+    <footer>
+        <p>Smart Resource Management © 2025 | Empowering Farmers with Technology</p>
+    </footer>
+
+    <script>
+        document.getElementById("generate-button").addEventListener("click", function() {
+            const season = document.getElementById("season").value;
+            const crop = document.getElementById("crop").value;
+            const soil = document.getElementById("soil").value;
+            const region = document.getElementById("region").value;
+
+            const loading = document.getElementById("loading");
+            const output = document.getElementById("recommendations-output");
+            const seedsOutput = document.getElementById("seeds");
+            const fertilizerOutput = document.getElementById("fertilizer");
+            const irrigationOutput = document.getElementById("irrigation");
+
+            // Show loading message
+            loading.style.display = "block";
+            output.style.display = "none";
+
+            setTimeout(() => {
+                // Hide loading message
+                loading.style.display = "none";
+
+                if (!season || !crop || !soil || !region) {
+                    alert("Please fill out all fields.");
+                    return;
+                }
+
+                // Generate AI-like recommendations
+                let seeds = "General high-yield seeds";
+                let fertilizer = "Standard NPK fertilizer";
+                let irrigation = "Follow irrigation best practices";
+
+                if (season === "summer" && crop === "wheat" && soil === "loamy" && region === "north") {
+                    seeds = "Heat-Resistant Wheat Seeds";
+                    fertilizer = "NPK 20:10:10 for Loamy Soil";
+                    irrigation = "Irrigate in early mornings twice a week.";
+                } else if (season === "monsoon" && crop === "rice" && soil === "clayey" && region === "south") {
+                    seeds = "Flood-Tolerant Rice Varieties";
+                    fertilizer = "Phosphate Fertilizer NPK 16:20:0";
+                    irrigation = "Allow water-logged conditions for best yield.";
+                } else if (season === "winter" && crop === "maize" && soil === "sandy" && region === "west") {
+                    seeds = "Cold-Tolerant Maize Seeds";
+                    fertilizer = "Potash-Rich Fertilizer NPK 15:15:15";
+                    irrigation = "Irrigate weekly to avoid water stress.";
+                }
+
+                // Populate recommendations
+                seedsOutput.innerHTML = `<strong>Seeds:</strong> ${seeds}`;
+                fertilizerOutput.innerHTML = `<strong>Fertilizer:</strong> ${fertilizer}`;
+                irrigationOutput.innerHTML = `<strong>Irrigation:</strong> ${irrigation}`;
+
+                output.style.display = "block";
+            }, 2000); // Simulate AI processing time
+        });
+    </script>
+</body>
+</html>

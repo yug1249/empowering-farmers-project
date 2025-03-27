@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Based Training on Advanced Farming Techniques</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      scroll-behavior: smooth;
+    }
+    /* Hero Section */
+    .hero {
+      background: url('https://source.unsplash.com/1600x900/?farming,agriculture') no-repeat center center/cover;
+      height: 70vh;
+      position: relative;
+      color: #fff;
+    }
+    .hero-overlay {
+      background: rgba(0,0,0,0.6);
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    /* Chatbot Styling */
+    .chat-box {
+      height: 300px;
+      overflow-y: auto;
+      background: #f8f9fa;
+      padding: 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+    }
+    .chat-message {
+      margin-bottom: 10px;
+    }
+    .chat-bot {
+      background-color: #e9ecef;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 80%;
+    }
+    .chat-user {
+      background-color: #d1e7dd;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 80%;
+      text-align: right;
+    }
+    /* Footer */
+    footer {
+      background: #343a40;
+      color: #fff;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">FarmTech Training</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#modules">Training Modules</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chatbot">AI Chat Assistant</a></li>
+          <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Home) -->
+  <section id="home" class="hero d-flex align-items-center justify-content-center">
+    <div class="hero-overlay"></div>
+    <div class="container text-center hero-content">
+      <h1 class="display-4">AI-Based Training for Advanced Farming Techniques</h1>
+      <p class="lead">Learn next‑generation farming strategies to boost productivity and sustainability.</p>
+      <a href="#modules" class="btn btn-primary btn-lg">Explore Modules</a>
+    </div>
+  </section>
+
+  <!-- Training Modules Section -->
+  <section id="modules" class="py-5">
+    <div class="container">
+      <h2 class="mb-4 text-center">Training Modules</h2>
+      <div class="row g-4">
+        <!-- Module Card 1: Precision Farming -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://source.unsplash.com/600x400/?precision,farming" class="card-img-top" alt="Precision Farming">
+            <div class="card-body">
+              <h5 class="card-title">Precision Farming</h5>
+              <p class="card-text">
+                Learn how data analytics, sensors, and GPS technology can optimize field-level management.
+              </p>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#module1Modal">Learn More</button>
+            </div>
+          </div>
+        </div>
+        <!-- Module Card 2: Smart Irrigation -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://source.unsplash.com/600x400/?irrigation,tech" class="card-img-top" alt="Smart Irrigation">
+            <div class="card-body">
+              <h5 class="card-title">Smart Irrigation Systems</h5>
+              <p class="card-text">
+                Discover how sensor-based irrigation reduces water waste and maximizes yield.
+              </p>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#module2Modal">Learn More</button>
+            </div>
+          </div>
+        </div>
+        <!-- Module Card 3: Drone & Sensor Integration -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="https://source.unsplash.com/600x400/?drone,agriculture" class="card-img-top" alt="Drone Farming">
+            <div class="card-body">
+              <h5 class="card-title">Drone & Sensor Integration</h5>
+              <p class="card-text">
+                Understand the use of drones and real-time monitoring for crop health analysis.
+              </p>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#module3Modal">Learn More</button>
+            </div>
+          </div>
+        </div>
+        <!-- You may add additional module cards for topics like Soil Health, Organic Farming, etc. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Chat Assistant Section -->
+  <section id="chatbot" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4 text-center">AI Chat Assistant</h2>
+      <p class="mb-4 text-center">Have questions about advanced farming techniques? Chat with our AI assistant below!</p>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div id="chatBox" class="chat-box"></div>
+              <div class="input-group mt-3">
+                <input type="text" id="chatUserInput" class="form-control" placeholder="Ask a question... (e.g., What is precision farming?)">
+                <button id="sendBtn" class="btn btn-primary">Send</button>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">Try questions like "What is precision farming?", "Explain smart irrigation", "What are drone farming applications?"</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="py-5">
+    <div class="container">
+      <h2 class="mb-4 text-center">Educational Resources</h2>
+      <ul class="list-group">
+        <li class="list-group-item"><a href="https://www.fao.org/home/en/" target="_blank">FAO – Food and Agriculture Organization</a></li>
+        <li class="list-group-item"><a href="https://www.agriculture.com/" target="_blank">Agriculture.com</a></li>
+        <li class="list-group-item"><a href="https://www.precisionfarmingdeal.com/" target="_blank">Precision Farming Deal</a></li>
+        <li class="list-group-item"><a href="https://www.smartfarmingtech.com/" target="_blank">Smart Farming Technologies</a></li>
+        <li class="list-group-item"><a href="https://www.youtube.com/results?search_query=advanced+farming+techniques" target="_blank">YouTube – Advanced Farming Techniques</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5 bg-dark text-white">
+    <div class="container">
+      <h2 class="mb-4 text-center">Contact Us</h2>
+      <p class="mb-4 text-center">For further inquiries or to request personalized training, please fill out the form below.</p>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form id="contactForm">
+            <div class="mb-3">
+              <label for="contactName" class="form-label">Your Name</label>
+              <input type="text" id="contactName" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactEmail" class="form-label">Email Address</label>
+              <input type="email" id="contactEmail" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactMessage" class="form-label">Message</label>
+              <textarea id="contactMessage" class="form-control" rows="4" placeholder="Your message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </form>
+          <div id="contactResponse" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-0">&copy; 2023 FarmTech Training. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    /******************************************************
+     * AI Chatbot Simulation (Pre-defined Responses)
+     ******************************************************/
+    const aiResponses = {
+      "what is precision farming?": "Precision farming uses data, sensors, and GPS technology to manage crops effectively. It helps in applying water, fertilizers, and pesticides exactly where needed.",
+      "explain smart irrigation": "Smart irrigation involves using sensors and real-time data to deliver precise amounts of water to crops, reducing waste and optimizing yields.",
+      "what are drone farming applications?": "Drones in farming are used for aerial monitoring of crop health, accurate spraying of agrochemicals, and mapping field conditions.",
+      "how does soil monitoring work?": "Soil monitoring uses in‑field sensors and satellite imagery to analyze soil moisture and nutrient levels, guiding proper fertilizer and water application.",
+      "advanced organic farming techniques": "Advanced organic farming blends traditional practices with modern scientific insights to maintain soil fertility and promote biodiversity while avoiding synthetic chemicals."
+    };
+
+    const chatBox = document.getElementById("chatBox");
+    const chatUserInput = document.getElementById("chatUserInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function appendMessage(content, sender) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "chat-message " + (sender === "user" ? "text-end" : "text-start");
+      const bubble = document.createElement("div");
+      bubble.className = sender === "user" ? "chat-user" : "chat-bot";
+      bubble.innerText = content;
+      msgDiv.appendChild(bubble);
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function getAiResponse(question) {
+      const normalizedQuestion = question.trim().toLowerCase();
+      // Check if any key in aiResponses is contained in the question.
+      for (let key in aiResponses) {
+        if (normalizedQuestion.includes(key)) {
+          return aiResponses[key];
+        }
+      }
+      return "I'm sorry, I do not have an answer to that question right now. Please try asking about topics like precision farming, smart irrigation, drone applications, or soil monitoring.";
+    }
+
+    sendBtn.addEventListener("click", function() {
+      const question = chatUserInput.value;
+      if (question.trim() === "") return;
+      appendMessage(question, "user");
+      const answer = getAiResponse(question);
+      setTimeout(() => {
+        appendMessage(answer, "bot");
+      }, 600);
+      chatUserInput.value = "";
+    });
+
+    chatUserInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendBtn.click();
+      }
+    });
+
+    /******************************************************
+     * Contact Form Submission Handling (Demo)
+     ******************************************************/
+    const contactForm = document.getElementById("contactForm");
+    const contactResponse = document.getElementById("contactResponse");
+    contactForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("contactName").value.trim();
+      contactResponse.innerHTML = `<div class="alert alert-success">Thank you, ${name}! Your message has been received. We'll get in touch shortly.</div>`;
+      contactForm.reset();
+    });
+
+    /******************************************************
+     * Optional: Modal Content for Training Modules
+     ******************************************************/
+    // You can use Bootstrap modals to show more detailed training content.
+    // In this demo, the "Learn More" buttons already trigger modals.
+    // For brevity, modal content code is omitted. You can add modals as needed.
+  </script>
+</body>
+</html>

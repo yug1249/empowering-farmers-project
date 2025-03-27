@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empowering Farmers</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            overflow: hidden; /* Prevents scroll during animation */
+        }
+
+        /* Fullscreen Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 3s ease-out forwards;
+        }
+
+        /* Logo Symbol Styling */
+        .logo {
+            width: 200px;
+            height: 200px;
+            background: url('Screenshot 2025-03-09 043955.png') no-repeat center center; /* Replace with your image */
+            background-size: contain; /* Ensures the image fits well */
+            animation: logoAppear 1.5s ease-in-out, logoGlow 1.5s infinite alternate ease-in-out;
+        }
+
+        /* Keyframes for Logo Animation */
+        @keyframes logoAppear {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        /* Keyframes for Glow Effect */
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(76, 175, 80, 0.5), 0 0 20px rgba(76, 175, 80, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.5);
+            }
+        }
+
+        /* Fade Out Keyframes */
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Main Content Styling */
+        .container {
+            display: none; /* Hidden until animation ends */
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .container h1 {
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            color: #4caf50;
+        }
+
+        .container p {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        video {
+            width: 80%; /* Reduced size */
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            text-decoration: none;
+            background: #4caf50;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #388e3c;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader with Animated Logo -->
+    <div class="loader">
+        <div class="logo"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Empowering Farmers</h1>
+        <p>Explore solutions powered by AI to transform agriculture. Watch the video below or visit our website for more insights.</p>
+        
+        <!-- Video -->
+        <video controls aria-label="Empowering Farmers - Video on AI Farming">
+            <source src="invideo-ai-1080 AI Farming_ The Future of Agriculture! 2025-03-15.mp4" type="video/mp4">
+            Your browser does not support the video tag. Please download the video to watch it.
+        </video>
+
+        <!-- Buttons -->
+        <div class="btn-container">
+            <a href="nvideo-ai-1080.mp4" class="btn" download>Download Video</a>
+            <a href="homee.html" class="btn">Visit Website</a>
+        </div>
+    </div>
+
+    <script>
+        // Loader Animation Logic
+        window.addEventListener('load', function() {
+            const loader = document.querySelector('.loader');
+            const container = document.querySelector('.container');
+
+            // Transition from loader to content
+            setTimeout(() => {
+                loader.style.display = 'none';
+                container.style.display = 'block';
+            }, 3000); // Matches fadeOut animation duration
+        });
+    </script>
+</body>
+</html>

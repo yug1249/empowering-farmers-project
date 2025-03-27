@@ -1,0 +1,65 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const PORT = 4000;
+
+// Middleware to parse JSON data
+app.use(bodyParser.json());
+
+// AI-based logic for climate analysis
+const analyzeClimateData = (climateData) => {
+    const recommendations = [];
+    const { temperature, humidity, rainfall, windSpeed } = climateData;
+
+    // Analyze temperature
+    if (temperature > 35) {
+        recommendations.push("Consider shading techniques or irrigation to reduce heat stress.");
+    } else if (temperature < 15) {
+        recommendations.push("Protect crops from frost by using cover or heaters.");
+    }
+
+    // Analyze humidity
+    if (humidity < 30) {
+        recommendations.push("Increase irrigation as the air is very dry.");
+    } else if (humidity > 80) {
+        recommendations.push("Watch for fungal diseases due to high humidity.");
+    }
+
+    // Analyze rainfall
+    if (rainfall > 50) {
+        recommendations.push("Check for waterlogging and improve drainage.");
+    } else if (rainfall < 20) {
+        recommendations.push("Plan irrigation due to low rainfall levels.");
+    }
+
+    // Analyze wind speed
+    if (windSpeed > 50) {
+        recommendations.push("Secure plants or structures to prevent wind damage.");
+    }
+
+    return recommendations;
+};
+
+// Endpoint to collect climate data and return recommendations
+app.post('/api/climate-analysis', (req, res) => {
+    const climateData = req.body;
+
+    console.log('Climate Data Received:', climateData);
+
+    const recommendations = analyzeClimateData(climateData);
+
+    res.status(200).json({
+        success: true,
+        recommendations: recommendations,
+    });
+});
+
+// Simple test endpoint
+app.get('/', (req, res) => {
+    res.send('Climate Analysis Backend is running!');
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Climate Analysis Backend running on http://localhost:${PORT}`);
+});

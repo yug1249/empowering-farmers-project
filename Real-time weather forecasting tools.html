@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farmer's Weather & Farming Advisory – All Districts (WeatherAPI)</title>
+  <style>
+    /* Basic styling for a modern, responsive look */
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      width: 95%;
+      max-width: 900px;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.3);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p.description {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .form-group {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    select, button {
+      width: 90%;
+      max-width: 350px;
+      padding: 8px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f8ff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+    }
+    /* For long dropdown lists, enable scrolling if needed */
+    select {
+      max-height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Farmer's Weather & Farming Advisory</h1>
+    <p class="description">
+      Select your State, District, and Season to view current general weather conditions along with crop and farming recommendations.
+    </p>
+    
+    <!-- State Dropdown -->
+    <div class="form-group">
+      <label for="stateSelect">Select State:</label>
+      <select id="stateSelect">
+        <option value="">-- Choose a State --</option>
+      </select>
+    </div>
+    
+    <!-- District Dropdown -->
+    <div class="form-group">
+      <label for="districtSelect">Select District:</label>
+      <select id="districtSelect">
+        <option value="">-- Choose a District --</option>
+      </select>
+    </div>
+    
+    <!-- Season Dropdown -->
+    <div class="form-group">
+      <label for="seasonSelect">Select Season:</label>
+      <select id="seasonSelect">
+        <option value="">-- Choose a Season --</option>
+        <option value="Kharif"> (Monsoon)</option>
+        <option value="Rabi">(Winter)</option>
+        <option value="Zaid">(Summer)</option>
+      </select>
+    </div>
+    
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button id="getWeatherBtn">Get Weather & Advisories</button>
+    </div>
+    
+    <!-- Results Display -->
+    <div id="result" class="result"></div>
+  </div>
+  
+  <script>
+    /******************************************************
+     * DATA: Complete List of Districts for 23 Indian States
+     ******************************************************/
+    const statesDistricts = {
+      "Andhra Pradesh": [
+        "Anantapur", "Chittoor", "East Godavari", "West Godavari", "Krishna",
+        "Guntur", "Kurnool", "Nellore", "Srikakulam", "Visakhapatnam", "Vizianagaram", "YSR Kadapa"
+      ],
+      "Arunachal Pradesh": [
+        "Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi",
+        "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Upper Siang",
+        "Lower Dibang Valley", "Dibang Valley", "Anjaw"
+      ],
+      "Assam": [
+        "Baksa", "Barpeta", "Bongaigaon", "Cachar", "Darrang", "Dhemaji", "Dhubri",
+        "Dibrugarh", "Goalpara", "Hailakandi", "Jorhat", "Kamrup", "Kamrup Metropolitan",
+        "Karbi Anglong", "Karimganj", "Lakhimpur", "Majuli", "Morigaon", "Nagaon",
+        "Nalbari", "Sivasagar", "Sonitpur", "Tinsukia"
+      ],
+      "Bihar": [
+        "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur",
+        "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad",
+        "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani",
+        "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa",
+        "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"
+      ],
+      "Chhattisgarh": [
+        "Balod", "Baloda Bazar", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada",
+        "Dhamtari", "Durg", "Gariaband", "Janjgir-Champa", "Jashpur", "Kabeerdham", "Kondagaon",
+        "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon",
+        "Surajpur", "Surguja"
+      ],
+      "Goa": [
+        "North Goa", "South Goa"
+      ],
+      "Gujarat": [
+        "Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar",
+        "Botad", "Chhota Udaipur", "Dahod", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath",
+        "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada",
+        "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat",
+        "Surendranagar", "Tapi", "Vadodara", "Valsad"
+      ],
+      "Haryana": [
+        "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurgaon", "Hisar",
+        "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Mewat",
+        "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"
+      ],
+      "Himachal Pradesh": [
+        "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul-Spiti",
+        "Mandi", "Shimla", "Sirmaur", "Solan", "Una"
+      ],
+      "Jharkhand": [
+        "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Giridih",
+        "Godda", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga",
+        "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahibganj", "Seraikela-Kharsawan", "Simdega", "West Singhbhum"
+      ],
+      "Karnataka": [
+        "Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar",
+        "Chamarajanagar", "Chikkaballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada",
+        "Davangere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar",
+        "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru",
+        "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"
+      ],
+      "Kerala": [
+        "Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam",
+        "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram",
+        "Thrissur", "Wayanad"
+      ],
+      "Madhya Pradesh": [
+        "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal",
+        "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori",
+        "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Mandla",
+        "Mandsaur", "Morena", "Niwari", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar",
+        "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli",
+        "Tikamgarh", "Ujjain", "Umaria", "Vidisha"
+      ],
+      "Maharashtra": [
+        "Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldana",
+        "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", 
+        "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar",
+        "Nashik", "Osmanabad", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara",
+        "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"
+      ],
+      "Manipur": [
+        "Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Senapati",
+        "Tamenglong", "Thoubal", "Ukhrul"
+      ],
+      "Meghalaya": [
+        "East Garo Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi",
+        "South Garo Hills", "South West Garo Hills", "South West Khasi Hills",
+        "West Garo Hills", "West Khasi Hills"
+      ],
+      "Mizoram": [
+        "Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip"
+      ],
+      "Nagaland": [
+        "Dimapur", "Kohima", "Mokokchung", "Mon", "Phek", "Tuensang", "Wokha", "Zunheboto"
+      ],
+      "Odisha": [
+        "Angul", "Balangir", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh", "Dhenkanal",
+        "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal",
+        "Kendrapara", "Kendujhar", "Mayurbhanj", "Nabarangpur", "Nuapada", "Puri", "Rayagada",
+        "Sambalpur", "Sundargarh"
+      ],
+      "Punjab": [
+        "Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka",
+        "Firozpur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana",
+        "Mansa", "Moga", "Muktsar", "Pathankot", "Patiala", "Rupnagar", "Sangrur",
+        "Shahid Bhagat Singh Nagar", "Tarn Taran"
+      ],
+      "Rajasthan": [
+        "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner",
+        "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Ganganagar",
+        "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur",
+        "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur",
+        "Sikar", "Sirohi", "Tonk", "Udaipur"
+      ],
+      "Tamil Nadu": [
+        "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul",
+        "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai",
+        "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai",
+        "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni",
+        "Thiruvallur", "Thiruvarur", "Tiruchirappalli", "Tirunelveli", "Tirupattur", "Tiruppur",
+        "Tiruvannamalai", "Vellore", "Viluppuram", "Virudhunagar"
+      ],
+      "Uttar Pradesh": [
+        "Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Azamgarh",
+        "Barabanki", "Bahraich", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria",
+        "Etah", "Etawah", "Firozabad", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur",
+        "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj",
+        "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kushinagar", "Lakhimpur Kheri",
+        "Lucknow", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad",
+        "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Raebareli", "Rampur", "Saharanpur",
+        "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Sitapur",
+        "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"
+      ]
+    };
+
+    /******************************************************
+     * Seasonal Crop Advisory Messages
+     ******************************************************/
+    const seasonalAdvice = {
+      "Kharif": "During the Kharif season, crops like rice, maize, and cotton perform well. Ensure proper water management and pest control measures during heavy rains.",
+      "Rabi": "In the Rabi season, wheat, barley, and mustard are popular. Prepare seedbeds well and ensure timely irrigation during drier periods.",
+      "Zaid": "For the Zaid season, focus on vegetables, fruits, and off‑season crops. Use mulching and drip‑irrigation techniques to conserve water during high temperatures."
+    };
+
+    /******************************************************
+     * Farming Practice Recommendation by Season
+     ******************************************************/
+    const farmingAdvice = {
+      "Kharif": "Recommended Farming Practices: Consider rainfed agriculture with supplemental irrigation where possible. Emphasize proper drainage and modern seed varieties.",
+      "Rabi": "Recommended Farming Practices: Utilize controlled irrigation methods and focus on soil enrichment. Explore both traditional and conservation farming techniques.",
+      "Zaid": "Recommended Farming Practices: Adopt drip or sprinkler irrigation systems, and focus on high‑value horticultural and vegetable crops."
+    };
+
+    /******************************************************
+     * Populate the Dropdowns
+     ******************************************************/
+    const stateSelect = document.getElementById("stateSelect");
+    const districtSelect = document.getElementById("districtSelect");
+    const seasonSelect = document.getElementById("seasonSelect");
+    const resultDiv = document.getElementById("result");
+
+    // Populate the state dropdown with states from our data.
+    for (const state in statesDistricts) {
+      const opt = document.createElement("option");
+      opt.value = state;
+      opt.textContent = state;
+      stateSelect.appendChild(opt);
+    }
+
+    // When a state is chosen, populate the district dropdown.
+    stateSelect.addEventListener("change", function() {
+      const selState = this.value;
+      districtSelect.innerHTML = '<option value="">-- Choose a District --</option>';
+      if (statesDistricts[selState]) {
+        statesDistricts[selState].forEach(function(district) {
+          const opt = document.createElement("option");
+          opt.value = district;
+          opt.textContent = district;
+          districtSelect.appendChild(opt);
+        });
+      }
+    });
+
+    /******************************************************
+     * Fetch Weather (Using WeatherAPI) & Display All Advisories
+     ******************************************************/
+    document.getElementById("getWeatherBtn").addEventListener("click", function() {
+      const selState = stateSelect.value;
+      const selDistrict = districtSelect.value;
+      const selSeason = seasonSelect.value;
+      
+      if (!selState || !selDistrict || !selSeason) {
+        resultDiv.innerHTML = "<p class='error'>Please select a State, District, and Season.</p>";
+        return;
+      }
+      
+      resultDiv.innerHTML = "<p>Loading weather data...</p>";
+      
+      // Construct the location query (e.g., "Chennai, Tamil Nadu, IN")
+      const locationQuery = encodeURIComponent(`${selDistrict}, ${selState}, IN`);
+      
+      // Use WeatherAPI with the provided API key (already given)
+      const apiKey = "d2439f97fcde41f1a05175645251803";
+      const weatherUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${locationQuery}&aqi=yes`;
+      
+      fetch(weatherUrl)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            resultDiv.innerHTML = `<p class='error'>Unable to fetch weather data. Error: ${data.error.message}</p>`;
+          } else {
+            // Using WeatherAPI's response structure:
+            const temperature = data.current.temp_c;
+            const description = data.current.condition.text;
+            const humidity = data.current.humidity;
+            const windSpeed = data.current.wind_kph;
+            
+            // Get advisory messages
+            const cropAdvisory = seasonalAdvice[selSeason] || "No crop advisory available.";
+            const farmPractice = farmingAdvice[selSeason] || "No farming advice available.";
+            
+            // Display a generic header for weather
+            resultDiv.innerHTML = `
+              <h2>General Weather Conditions for ${selDistrict}, ${selState}</h2>
+              <p><strong>Temperature:</strong> ${temperature}°C</p>
+              <p><strong>Conditions:</strong> ${description}</p>
+              <p><strong>Humidity:</strong> ${humidity}%</p>
+              <p><strong>Wind Speed:</strong> ${windSpeed} kph</p>
+              <hr>
+              <h3>Crop Advisory for the ${selSeason} Season</h3>
+              <p>${cropAdvisory}</p>
+              <hr>
+              <h3>Suitable Farming Practices</h3>
+              <p>${farmPractice}</p>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching weather data:", error);
+          resultDiv.innerHTML = `<p class='error'>Error fetching weather data.</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
