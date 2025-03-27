@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resource Management</title>
+    <style> body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: url('https://example.com/agriculture-background.jpg') no-repeat center center fixed; /* Replace the URL with a proper agriculture background image */ background-size: cover; color: #fff; overflow-x: hidden; } header { text-align: center; padding: 30px; background: rgba(0, 102, 0, 0.8); color: #fff; box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5); } header h1 { margin: 0; font-size: 2.8em; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; } header p { font-size: 1.2em; margin: 10px 0 0; color: #d4edda; } main { padding: 20px; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; } section { margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.9); color: #333; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); width: 100%; } section h2 { color: #4CAF50; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); } form label { display: block; margin-bottom: 10px; font-weight: bold; color: #4CAF50; } form select, form input { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #4CAF50; border-radius: 4px; font-size: 1em; background: #f9f9f9; color: #333; } select option { background: #ffffff; color: #333; } button { background: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; } button:hover { background: #388E3C; } #recommendations-output { margin-top: 20px; padding: 20px; background: rgba(245, 245, 245, 0.9); color: #333; border: 1px solid #4CAF50; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 128, 0, 0.3); } #recommendations-output h3 { color: #4CAF50; text-align: center; } footer { text-align: center; padding: 15px; background: rgba(0, 102, 0, 0.8); color: white; margin-top: 30px; box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.5); } @media (max-width: 600px) { body { font-size: 14px; } select, button, input { font-size: 14px; padding: 8px; } } </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Resource Management</h1>
+        <p>AI-Powered Recommendations for Farmers</p>
+    </header>
+    <main>
+        <section>
+            <h2>Get Personalized Recommendations</h2>
+            <form id="recommendation-form">
+                <label for="season">Select Season:</label>
+                <select id="season">
+                    <option value="">--Select--</option>
+                    <option value="summer">Summer</option>
+                    <option value="monsoon">Monsoon</option>
+                    <option value="winter">Winter</option>
+                </select>
+
+                <label for="crop-type">Select Crop Type:</label>
+                <select id="crop-type">
+                    <option value="">--Select--</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="rice">Rice</option>
+                    <option value="maize">Maize</option>
+                </select>
+
+                <label for="soil-type">Select Soil Type:</label>
+                <select id="soil-type">
+                    <option value="">--Select--</option>
+                    <option value="loamy">Loamy</option>
+                    <option value="clayey">Clayey</option>
+                    <option value="sandy">Sandy</option>
+                </select>
+
+                <label for="region">Select Region:</label>
+                <select id="region">
+                    <option value="">--Select--</option>
+                    <option value="north">North</option>
+                    <option value="south">South</option>
+                    <option value="east">East</option>
+                    <option value="west">West</option>
+                </select>
+
+                <button type="button" id="generate-recommendations">Generate Recommendations</button>
+            </form>
+
+            <div id="recommendations-output" style="margin-top:20px;"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Smart Resource Management</p>
+    </footer>
+    <script>
+        document.getElementById("generate-recommendations").addEventListener("click", function () {
+            const season = document.getElementById("season").value;
+            const cropType = document.getElementById("crop-type").value;
+            const soilType = document.getElementById("soil-type").value;
+            const region = document.getElementById("region").value;
+
+            const output = document.getElementById("recommendations-output");
+
+            if (!season || !cropType || !soilType || !region) {
+                output.innerHTML = "<p style='color:red;'>Please select all fields to get recommendations.</p>";
+                return;
+            }
+
+            let recommendations = {
+                seeds: "Default high-yield seeds",
+                fertilizer: "General purpose fertilizer",
+                irrigation: "Standard irrigation practices"
+            };
+
+            if (season === "summer" && cropType === "wheat" && soilType === "loamy" && region === "north") {
+                recommendations = {
+                    seeds: "Heat-Resistant Wheat Seeds",
+                    fertilizer: "NPK 20:10:10",
+                    irrigation: "Irrigate in early mornings twice a week."
+                };
+            } else if (season === "monsoon" && cropType === "rice" && soilType === "clayey" && region === "south") {
+                recommendations = {
+                    seeds: "Flood-Tolerant Rice Varieties",
+                    fertilizer: "Phosphate Fertilizer NPK 16:20:0",
+                    irrigation: "Allow water-logged conditions for best yield."
+                };
+            } else if (season === "winter" && cropType === "maize" && soilType === "sandy" && region === "west") {
+                recommendations = {
+                    seeds: "Cold-Tolerant Maize Seeds",
+                    fertilizer: "Potash-Rich Fertilizer NPK 15:15:15",
+                    irrigation: "Irrigate weekly to avoid water stress."
+                };
+            }
+
+            output.innerHTML = `
+                <h3>Recommendations:</h3>
+                <p><strong>Seeds:</strong> ${recommendations.seeds}</p>
+                <p><strong>Fertilizer:</strong> ${recommendations.fertilizer}</p>
+                <p><strong>Irrigation:</strong> ${recommendations.irrigation}</p>
+            `;
+        });
+    </script>
+</body>
+</html>

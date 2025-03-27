@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empowering Farmers - Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-image: url('farmers working in the field.png');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      animation: subtleGlow 10s infinite alternate;
+    }
+  
+    @keyframes subtleGlow {
+      0% { filter: brightness(100%); }
+      50% { filter: brightness(115%); }
+      100% { filter: brightness(100%); }
+    }
+  
+    .welcome-message {
+      color: #4CAF50;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      animation: fadeZoom 5s ease-in-out;
+    }
+  
+    @keyframes fadeZoom {
+      0% { opacity: 0; transform: scale(0.8); }
+      30% { opacity: 1; transform: scale(1); }
+      70% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+  
+    .form-container {
+      display: none;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      padding: 30px 20px;
+      width: 400px;
+      animation: slideUp 1s ease-out forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+  
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  
+    h2 {
+      color: #4CAF50;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+  
+    h2::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #4CAF50;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+  
+    input,
+    button,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+    input:focus,
+    select:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    }
+  
+    button {
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: white;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+  
+    button:hover {
+      background: linear-gradient(135deg, #66BB6A, #388E3C);
+      transform: scale(1.05);
+    }
+  
+    button:active {
+      transform: scale(0.95);
+    }
+  
+    a {
+      color: #4CAF50;
+      text-decoration: underline;
+      font-size: 0.95rem;
+      text-align: center;
+      display: block;
+    }
+  
+    a:hover {
+      color: #388E3C;
+      text-decoration: none;
+    }
+  
+    p.error {
+      color: red;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: -15px 0 15px;
+      display: none;
+    }
+  
+    .forgot-password,
+    .create-account {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+  
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px 15px;
+        width: 90%;
+      }
+  
+      h2 {
+        font-size: 1.8rem;
+      }
+  
+      input,
+      button,
+      select {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+  
+      button {
+        font-size: 1rem;
+      }
+  
+      a {
+        font-size: 0.85rem;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .welcome-message { font-size: 1.5rem; }
+      h2 { font-size: 1.6rem; }
+    }
+  
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: #fff;
+      font-size: 1.5rem;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+  
+    .fab:hover {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, #66BB6A, #388E3C);
+    }
+  </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <!-- Welcome Message -->
+  <div id="welcomeMessage" class="welcome-message">
+    Thank you for giving us a chance to help farmers!
+  </div>
+
+  <!-- Login Form -->
+  <div id="loginFormContainer" class="form-container">
+    <h2>Login to Empowering Farmers</h2>
+    <form id="loginForm">
+      <input type="text" id="loginUsername" placeholder="Enter your username" required>
+      <input type="password" id="loginPassword" placeholder="Enter your password" required>
+      <button type="button" onclick="validateLogin()">Login</button>
+    </form>
+    <p id="errorMessage" class="error">
+      Invalid username or password. Please try again.
+    </p>
+    <div class="forgot-password">
+      <a href="forgot-password.html">Forgot Password?</a>
+    </div>
+    <div class="create-account">
+      <!-- Google Account Button -->
+      <div id="g_id_onload"
+           data-client_id="YOUR_GOOGLE_CLIENT_ID"  <!-- Replace with your actual Google Client ID -->
+           data-context="signup"
+           data-ux_mode="popup"
+           data-callback="handleCredentialResponse"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin" data-type="standard"></div>
+      <p style="text-align: center;">OR</p>
+      <a href="create.html">Create an account manually</a>
+      <!-- Continue as Guest Option -->
+      <p style="text-align: center; margin-top: 10px;">
+        <a href="homee.html">Continue as Guest</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <div class="fab" onclick="redirectToHelp()">?</div>
+
+  <script>
+    // Display the login form after the welcome message animation
+    window.onload = function () {
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const loginFormContainer = document.getElementById('loginFormContainer');
+      setTimeout(() => {
+        welcomeMessage.style.display = 'none';
+        loginFormContainer.style.display = 'block';
+      }, 3000);
+    };
+
+    function validateLogin() {
+      const enteredUsername = document.getElementById("loginUsername").value;
+      const enteredPassword = document.getElementById("loginPassword").value;
+      // Retrieve stored credentials from local storage
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+        alert("Login successful!");
+        window.location.href = "homee.html";
+      } else {
+        document.getElementById("errorMessage").style.display = "block";
+      }
+    }
+
+    // Google Sign-In Callback Function
+    function handleCredentialResponse(response) {
+      console.log("Encoded JWT ID token: " + response.credential);
+      alert("Google Sign-In successful!");
+      window.location.href = "homee.html";
+    }
+
+    // Redirect to Help Center Function
+    function redirectToHelp() {
+      alert("Redirecting to Help Center...");
+      window.location.href = "help.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empowering Farmers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+    }
+    
+          
+      
+      
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+    }
+
+    .container {
+      padding: 2rem;
+      display: none; /* Hidden by default */
+    }
+
+    .profile-form, .main-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-content {
+      display: none; /* Hidden until profile is completed */
+    }
+
+    .button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .button:hover {
+      background: #45a049;
+    }
+
+    nav {
+      background: #333;
+      color: white;
+      overflow: hidden;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      padding: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    nav ul li:hover {
+      background: #575757;
+    }
+
+    nav ul li.active {
+      background: #4CAF50;
+    }
+
+    section {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    #profile-display {
+      background: #f0f0f0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-top: 1.5rem;
+    }
+
+    #profile-display h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Empowering Small & Marginal Farmers</h1>
+  <p>Revolutionizing Agriculture with AI-Driven Solutions</p>
+</header>
+
+<div class="container">
+  <!-- Profile Completion Form -->
+  <div class="profile-form">
+    <h2>Complete Your Profile</h2>
+    <p>Please fill out your details to proceed:</p>
+    <form id="profileForm">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="location">Location:</label><br>
+      <input type="text" id="location" name="location" required><br><br>
+
+      <button type="button" class="button" onclick="completeProfile()">Submit</button>
+    </form>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <nav>
+      <ul>
+        <li class="active" onclick="showSection('government-schemes')">Government Schemes & Policies</li>
+        <li onclick="showSection('crisis')">The Crisis</li>
+        <li onclick="showSection('ai-solution')">AI Solutions</li>
+        <li onclick="showSection('statistics')">Statistics</li>
+        <li onclick="showSection('stories')">Success Stories</li>
+        <li onclick="showSection('resources')">Resources</li>
+        <li onclick="viewProfile()">View Profile</li>
+      </ul>
+    </nav>
+    <section id="government-schemes" class="active" style="background: linear-gradient(to bottom, #e8f5e9, #ffffff); border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-top: 20px;">
+        <h2 style="text-align: center; color: #4CAF50; font-size: 2rem; font-weight: bold; margin-bottom: 10px; letter-spacing: 1px;">Government Schemes & Policies</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #555; margin-bottom: 20px;">
+          Empowering small and marginal farmers with innovative government initiatives for sustainable agriculture.
+        </p>
+        <ul style="list-style: none; padding: 0; font-size: 1.1rem; line-height: 1.8; color: #333;">
+          <li style="margin-bottom: 15px;">
+            <strong style="color: #4CAF50;">Pradhan Mantri Kisan Samman Nidhi (PM-KISAN):</strong> Provides ₹6,000 annually to eligible farmers in three equal installments. Learn more 
+            <a href="https://pib.gov.in/PressReleaseIframePage.aspx?PRID=2002012" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>.
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong style="color: #4CAF50;">Pradhan Mantri Fasal Bima Yojana (PMFBY):</strong> Offers affordable crop insurance to protect farmers against natural calamities. Details available 
+            <a href="https://krishijagran.com/blog/25-government-schemes-for-farmers-from-affordable-loans-to-subsidies-and-storage-assistance-check-here/" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>.
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong style="color: #4CAF50;">Kisan Credit Card (KCC) Scheme:</strong> Provides short-term credit for crop cultivation and other needs. Check out the scheme 
+            <a href="https://testbook.com/ias-preparation/agriculture-schemes-in-india" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>.
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong style="color: #4CAF50;">Soil Health Card Scheme:</strong> Helps farmers understand the nutrient status of their soil for better crop yield. More information 
+            <a href="https://www.drishtiias.com/daily-updates/daily-news-analysis/schemes-for-farmers-welfare" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>.
+          </li>
+          <li>
+            <strong style="color: #4CAF50;">National Agriculture Market (e-NAM):</strong> A digital platform connecting farmers with buyers for better price discovery. Explore it 
+            <a href="https://krishijagran.com/blog/25-government-schemes-for-farmers-from-affordable-loans-to-subsidies-and-storage-assistance-check-here/" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>.
+          </li>
+        </ul>
+        <p style="text-align: center; font-size: 1rem; color: #555; margin-top: 20px;">
+          These initiatives aim to enhance farmers' financial stability, productivity, and access to resources. Explore the links above to learn more about each scheme and how to apply.
+        </p>
+      </section>
+      
+      <p>These initiatives aim to enhance farmers' financial stability, productivity, and access to resources. Explore the links to learn more about each scheme and how to apply.</p>
+      </section>
+      
+      
+    
+
+    <section id="crisis">
+      <h2>The Crisis</h2>
+      <p>Small and marginal farmers face severe challenges like...</p>
+    </section>
+
+    <section id="ai-solution">
+      <h2>AI Solutions</h2>
+      <p>Harnessing AI to provide real-time insights and smart recommendations...</p>
+    </section>
+
+    <section id="statistics">
+      <h2>Statistics</h2>
+      <p>Data-driven improvements in yield, cost, and technology adoption rates...</p>
+    </section>
+
+    <section id="stories">
+      <h2>Success Stories</h2>
+      <p>Real transformations from our farming community...</p>
+    </section>
+
+    <section id="resources">
+      <h2>Resources</h2>
+      <p>Practical guides, partnerships, and best practices...</p>
+    </section>
+
+    <!-- Profile Display -->
+    <div id="profile-display" style="display: none;">
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="display-name"></span></p>
+      <p><strong>Email:</strong> <span id="display-email"></span></p>
+      <p><strong>Location:</strong> <span id="display-location"></span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simulate login action and show profile form
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.container').style.display = 'block';
+  });
+
+  // Profile completion handler
+  function completeProfile() {
+    const form = document.getElementById('profileForm');
+    if (form.checkValidity()) {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const location = document.getElementById('location').value;
+
+      // Save profile data for viewing
+      document.getElementById('display-name').textContent = name;
+      document.getElementById('display-email').textContent = email;
+      document.getElementById('display-location').textContent = location;
+
+      document.querySelector('.profile-form').style.display = 'none'; // Hide profile form
+      document.querySelector('.main-content').style.display = 'block'; // Show main content
+    } else {
+      alert("Please complete all fields.");
+    }
+  }
+
+  // Section navigation handler
+  function showSection(sectionId) {
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+
+    document.querySelectorAll('nav ul li').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.querySelector(`nav ul li[onclick="showSection('${sectionId}')"]`).classList.add('active');
+  }
+ 
+  // View Profile handler
+  function viewProfile() {
+    document.getElementById('profile-display').style.display = 'block';
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.remove('active');
+    });
+
+    document.querySelectorAll('nav ul li').forEach(tab => {
+      tab.classList.remove('active');
+    });
+  }
+</script>
+
+</body>
+</html>

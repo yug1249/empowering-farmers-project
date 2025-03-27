@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account for Rural Empowerment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: underline;
+            text-align: center;
+            display: block;
+        }
+        p.error {
+            color: red;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Your Account</h2>
+        <form id="createAccountForm">
+            <!-- Username -->
+            <input type="text" id="username" placeholder="Enter your username" required>
+            
+            <!-- Password -->
+            <input type="password" id="password" placeholder="Create a password" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+            
+            <!-- Date of Birth -->
+            <input type="date" id="dob" placeholder="Date of Birth" required>
+            
+            <!-- Gender -->
+            <select id="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer_not_to_say">Prefer not to say</option>
+            </select>
+            
+            <!-- Location -->
+            <input type="text" id="location" placeholder="Enter your location (City, State)" required>
+            
+            <!-- Phone Number -->
+            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            
+            <!-- Error Message -->
+            <p id="errorMessage" class="error">Error: Please check the details and try again!</p>
+            
+            <!-- Submit Button -->
+            <button type="button" onclick="submitForm()">Create Account</button>
+        </form>
+
+        <a href=index.html">Already have an account? Log in here</a>
+    </div>
+
+    <script>
+        function submitForm() {
+            // Retrieve form values
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+            const dob = document.getElementById("dob").value;
+            const gender = document.getElementById("gender").value;
+            const location = document.getElementById("location").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Clear any previous error messages
+            errorMessage.style.display = "none";
+
+            // Validation: Ensure required fields are filled
+            if (!username || !password || !confirmPassword || !dob || !gender || !location || !phone) {
+                errorMessage.textContent = "Error: All fields are required.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Error: Passwords do not match.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Validate phone number format (basic example: digits only, 10 characters)
+            if (!/^\d{10}$/.test(phone)) {
+                errorMessage.textContent = "Error: Invalid phone number. It must be 10 digits.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            // Save user data to localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password); // NOTE: In production, do NOT store plain text passwords.
+            localStorage.setItem("dob", dob);
+            localStorage.setItem("gender", gender);
+            localStorage.setItem("location", location);
+            localStorage.setItem("phone", phone);
+
+            // Success message and redirect
+            alert("Account created successfully!");
+            window.location.href = "index.html"; // Redirect to login page
+            
+        }
+    </script>
+</body>
+</html>
